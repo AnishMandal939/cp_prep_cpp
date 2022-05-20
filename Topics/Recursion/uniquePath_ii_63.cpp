@@ -39,38 +39,48 @@
 
 // using recursion with memoization 
 
-// creating class with solution :
 
-// #include<bits/stdc++.h>
-// include header bits
+// include headers
 #include <bits/stdc++.h>
 using namespace std;
 class Solution {
     vector<vector<int>> dp;
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
-         if(obstacleGrid[0][0]) return 0;
-        int n = obstacleGrid.size(), m=obstacleGrid[0].size();
-        for(int i=0; i < n; i++){
-            dp.push_back(vector<int>(m, -1));
+       
+         if(obstacleGrid[0][0]) return 0; // if first element is 1 then return 0 
+
+        int n = obstacleGrid.size(), m=obstacleGrid[0].size(); // n is rows and m is columns 
+
+        for(int i=0; i < n; i++){ // initialize dp array 
+        
+            dp.push_back(vector<int>(m, -1)); // -1 is used to represent uninitialized values 
         }
-        return solve(obstacleGrid, n, m, 0, 0);
+        return solve(obstacleGrid, n, m, 0, 0); // call solve function 
     }
     private:
     int solve(vector<vector<int>>& grid, int n, int m, int x, int y){
-        if(x == n-1 && y == m-1)
-            return (grid[x][y] != 1) ? 1 : 0;
-        if(dp[x][y]>=0) return dp[x][y];
-        int temp=0;
-        if(x+1 < n && !grid[x+1][y])
-            temp+= solve(grid, n, m, x+1, y);
-        if(y+1 < m && !grid[x][y+1])
-            temp+= solve(grid, n, m, x, y+1);
-        return dp[x][y] = temp;
+        if(x == n-1 && y == m-1) // if we reached the end then return 1 
+
+            return (grid[x][y] != 1) ? 1 : 0; // if grid[x][y] is 1 then return 0 
+
+        if(dp[x][y]>=0) return dp[x][y]; // if dp[x][y] is already calculated then return it 
+
+        int temp=0; // temp is used to store the value 
+
+        if(x+1 < n && !grid[x+1][y]) // if x+1 is less than n and grid[x+1][y] is 0 then call solve function 
+
+            temp+= solve(grid, n, m, x+1, y); // call solve function 
+
+        if(y+1 < m && !grid[x][y+1]) // if y+1 is less than m and grid[x][y+1] is 0 then call solve function 
+
+            temp+= solve(grid, n, m, x, y+1); // call solve function 
+
+        return dp[x][y] = temp; // return the value 
             }
 };
 
-// create main function to test the above class
+// main function to print output and run under the teminal
 int main() {
     // create an object of the class
     Solution s;
